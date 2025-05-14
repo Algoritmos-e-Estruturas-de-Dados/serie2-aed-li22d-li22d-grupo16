@@ -39,13 +39,13 @@ class SplitEvensAndOddsTest {
     }
 
     /**
-     * Test one sequece
+     * Test one sequence
      *
      * @sequence: the sequence of numbers to test
      * @oddIndex: the index of the first odd number after the split
      */
     private fun testSequence( sequence: List<Int>,  oddIndex: Int ){
-        var sentinel= sequence.toLinkedList() // create doubly linked list with sentinel
+        val sentinel= sequence.toLinkedList() // create doubly linked list with sentinel
         splitEvensAndOdds(sentinel)
         val r= sentinel.toList()
         for (i in 0 ..< oddIndex){          // check even numbers
