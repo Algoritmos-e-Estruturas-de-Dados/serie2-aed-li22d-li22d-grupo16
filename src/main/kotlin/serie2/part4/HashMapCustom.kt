@@ -243,4 +243,24 @@ class HashMapCustom<K, V>(
                 return result
             }
         }
+    /**
+     * Retrieves all the values stored in the map.
+     *
+     * This function iterates through all the buckets of the internal hash table
+     * and collects the values of each key-value pair into a list.
+     *
+     * @return A list containing all values currently stored in the map.
+     */
+    fun values(): List<V> {
+        val values = mutableListOf<V>()
+        for (bucket in table) {
+            var node = bucket
+            while (node != null) {
+                values.add(node.value) // Add the value of the current node
+                node = node.next       // Move to the next node in the chain
+            }
+        }
+        return values
+    }
+
 }

@@ -1,58 +1,81 @@
 package serie2.problema
 
 /**
- * Object responsible for managing and performing set operations
- * (union, intersection, and difference) between two collections of 2D points.
+ * Implementation1 performs set operations on 2D points using Kotlin
+ * standard library collections such as HashMap and Set.
+ *
+ * This class provides:
+ * - `loadDocuments1`: Loads two point sets from files.
+ * - `union1`: Returns all unique points from both sets.
+ * - `intersection1`: Returns points common to both sets.
+ * - `difference1`: Returns points in the first set not in the second.
+ *
+ * The identity of a point is determined by its `id`.
  */
-object Implementation1 {
-
-    // Maps storing the points from each input file, indexed by point ID
-    private var pointsMap1: Map<String, Point> = emptyMap()
-    private var pointsMap2: Map<String, Point> = emptyMap()
+class Implementation1 {
+    private var points1 = PointList() // Stores points from the first input file
+    private var points2 = PointList() // Stores points from the second input file
 
     /**
-     * Loads two point collection files from the resources/data directory.
+     * Loads two point sets from the specified input files.
      *
-     * @param file1 the name of the first file (e.g., "Test1.co").
-     * @param file2 the name of the second file (e.g., "Test2.co").
+     * @param file1 Path to the first .co file
+     * @param file2 Path to the second .co file
      */
     fun loadDocuments1(file1: String, file2: String) {
-
-        // Read both files and store the results in the maps
-        pointsMap1 = FileUtils.readPoints(file1)
-        pointsMap2 = FileUtils.readPoints(file2)
+        points1 = PointList.readFromFile(file1)
+        points2 = PointList.readFromFile(file2)
     }
 
     /**
-     * Returns the union of the points from both documents.
-     * Points are included without duplication.
+     * Returns the union of both point sets.
+     * Only unique points are included (based on ID).
      *
-     * @return a set of points that appear in at least one document.
+     * @return A PointList containing all unique points from both sets
      */
-    fun union1(): Set<Point> {
-        // Merge values from both maps and convert to set to remove duplicates
-        return (pointsMap1.values + pointsMap2.values).toSet()
+    fun union1(): PointList {
+        // Combine both point sets into a HashMap to eliminate duplicates by ID
+        val map = HashMap<String, Point>()
+
+        // Add points from the first set
+        for (p in points1.points) map[p.id] = p
+
+        // Add/overwrite points from the second set
+        for (p in points2.points) map[p.id] = p
+
+        // Return the values (unique points) as a new PointList
+        return PointList(map.values.toList())
     }
 
     /**
-     * Returns the intersection of the points from both documents.
-     * Only points that exist in both documents will be included.
+     * Returns the intersection of both point sets.
+     * Only points that exist in both sets (by ID) are included.
      *
-     * @return a set of common points.
+     * @return A PointList of common points
      */
-    fun intersection1(): Set<Point> {
-        // Keep only points that exist in both collections
-        return pointsMap1.values.intersect(pointsMap2.values.toSet()).toSet()
+    fun intersection1(): PointList {
+        // Build a set of IDs from the second point set
+        val set2 = points2.points.map { it.id }.toSet()
+
+        // Filter points from the first set that are also in set2
+        val result = points1.points.filter { it.id in set2 }
+
+        return PointList(result)
     }
 
     /**
-     * Returns the difference between the points of the first and second document.
-     * Only points that are in the first document but not in the second are included.
+     * Returns the difference between the first and second point sets.
+     * Only points that exist in the first set and not in the second are included.
      *
-     * @return a set of unique points from the first document.
+     * @return A PointList containing points only in the first set
      */
-    fun difference1(): Set<Point> {
-        // Subtract points from map2 from the ones in map1
-        return pointsMap1.values.minus(pointsMap2.values.toSet()).toSet()
+    fun difference1(): PointList {
+        // Build a set of IDs from the second point set
+        val set2 = points2.points.map { it.id }.toSet()
+
+        // Filter points from the first set whose ID is not in set2
+        val result = points1.points.filter { it.id !in set2 }
+
+        return PointList(result)
     }
 }

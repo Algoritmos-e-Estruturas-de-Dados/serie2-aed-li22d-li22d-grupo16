@@ -12,3 +12,4 @@ data class Point(
     val x: Int,      // X-coordinate of the point
     val y: Int       // Y-coordinate of the point
 )
+

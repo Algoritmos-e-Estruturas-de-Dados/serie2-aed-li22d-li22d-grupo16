@@ -1,89 +1,59 @@
 package serie2.problema
 
 import java.io.File
-import java.io.FileWriter
 
 /**
- * Utility object that provides file operations for reading and writing collections of 2D points.
+ * Represents a list of 2D points and provides methods to load from or save to a file.
+ *
+ * Expected file format (.co):
+ * - Lines defining a point must start with 'v' and follow the format:
+ *   `v <id> <x> <y>`
+ * - Lines starting with 'c' or 'p' are ignored (comments or metadata).
  */
-object FileUtils {
+class PointList(val points: List<Point> = listOf()) {
 
-    /**
-     * Reads a set of 2D points from the given `.co` file and returns them as a map.
-     *
-     * Each line in the file must follow the format: "v <id> <x> <y>".
-     *
-     * @param filePath the path to the input file.
-     * @return a map of points indexed by their identifier.
-     */
-    fun readPoints(filePath: String): Map<String, Point> {
-        val map = mutableMapOf<String, Point>()
-        val inputPath = "src/main/resources/data/$filePath"
+    companion object {
+        /**
+         * Reads a .co file and extracts valid points.
+         * Ignores lines that don't start with 'v' or are malformed.
+         *
+         * @param filename The name of the input file (from the data folder)
+         * @return A PointList containing parsed points
+         */
+        fun readFromFile(filename: String): PointList {
+            val path = "src/main/resources/data/$filename"
+            val lines = File(path).readLines()
 
-        // Read each line from the file and parse points
-        File(inputPath).forEachLine { line ->
-            val parts = line.trim().split(" ")
+            // Parse lines that start with 'v' and contain 3 values: id, x, y
+            val points = lines.mapNotNull {
+                val parts = it.trim().split(" ")
+                if (parts.size == 4 && parts[0] == "v") {
+                    val id = parts[1]
+                    val x = parts[2].toIntOrNull()
+                    val y = parts[3].toIntOrNull()
 
-            // Validate format and extract point values
-            if (parts.isNotEmpty() && parts[0] == "v" && parts.size == 4) {
-                val id = parts[1]
-                val x = parts[2].toInt()
-                val y = parts[3].toInt()
-                map[id] = Point(id, x, y)
+                    if (x != null && y != null) Point(id, x, y) else null
+                } else null
             }
-        }
 
-        return map
-    }
-
-    /**
-     * Writes a set of 2D points to a file in the "resources/outputs" directory.
-     *
-     * Each point is written in the format: "v <id> <x> <y>".
-     *
-     * @param outputFile the name of the output file (e.g., "result.co").
-     * @param points the set of points to write.
-     */
-    fun writePointsImp1(outputFile: String, points: Set<Point>) {
-        // Build the full output path under resources/outputs
-        val outputPath = "src/main/resources/outputs/$outputFile"
-
-        // Create the file if it does not exist
-        File(outputPath).apply {
-            createNewFile()
-        }
-
-        // Write all points to the file using the defined format
-        FileWriter(outputPath).use { writer ->
-            points.forEach { point ->
-                writer.write("v ${point.id} ${point.x} ${point.y}\n")
-            }
+            return PointList(points)
         }
     }
 
     /**
-     * Writes a list of 2D points to a file in the "resources/outputs" directory.
+     * Writes the list of points to a .co output file in the format:
+     * `<id> <x> <y>` (one per line).
      *
-     * Each point is written in the format: "v <id> <x> <y>".
-     *
-     * @param outputFile the name of the output file (e.g., "result.co").
-     * @param points the list of points to write.
+     * @param filename The name of the output file (written to outputs folder)
      */
-    fun writePointsImp2(outputFile: String, points: List<Point>) {
-        // Build the full output path under resources/outputs
-        val outputPath = "src/main/resources/outputs/$outputFile"
+    fun writeToFile(filename: String) {
+        val outputPath = "src/main/resources/outputs/$filename"
 
-        // Create the file if it does not exist
-        File(outputPath).apply {
-            createNewFile()
-        }
-
-        // Write all points to the file using the defined format
-        FileWriter(outputPath).use { writer ->
+        File(outputPath).printWriter().use { out ->
             for (point in points) {
-                writer.write("v ${point.id} ${point.x} ${point.y}\n")
+                // Write each point in the expected format
+                out.println("${point.id} ${point.x} ${point.y}")
             }
         }
     }
-
 }

@@ -1,117 +1,95 @@
 package serie2.problema
 
-import serie2.part4.*
+import serie2.part4.HashMapCustom
 
 /**
- * Provides operations over two point maps such as union, intersection and difference.
- * Uses a custom map implementation (HashMapCustom) and avoids Kotlin standard collections.
+ * Implementation2 performs operations on sets of 2D points using
+ * a custom hash map implementation ("HashMapCustom").
+ *
+ * This class mimics the standard map-based behavior from Implementation1,
+ * but relies entirely on custom internal data structures.
+ *
+ * Provides:
+ * - `loadDocuments2`: Loads two sets of points into custom maps.
+ * - `union2`: All unique points from both sets.
+ * - `intersection2`: Points common to both sets.
+ * - `difference2`: Points in the first set not in the second.
  */
-object Implementation2 {
-
-    // Map to store points from the first file
-    private var pointsMap1: CustomMutableMap<String, Point> = HashMapCustom()
-
-    // Map to store points from the second file
-    private var pointsMap2: CustomMutableMap<String, Point> = HashMapCustom()
+class Implementation2 {
+    private var map1 = HashMapCustom<String, Point>() // First point set (ID → Point)
+    private var map2 = HashMapCustom<String, Point>() // Second point set (ID → Point)
 
     /**
-     * Loads two documents containing point data and stores them in separate custom maps.
+     * Loads two point sets from .co files into custom hash maps.
      *
-     * @param file1 Path to the first input file
-     * @param file2 Path to the second input file
+     * @param file1 Name of the first .co file
+     * @param file2 Name of the second .co file
      */
     fun loadDocuments2(file1: String, file2: String) {
-        val tmp1 = FileUtils.readPoints(file1)
-        val tmp2 = FileUtils.readPoints(file2)
+        map1 = HashMapCustom()
+        map2 = HashMapCustom()
 
-        // Clear maps before loading new data
-        pointsMap1.clear()
-        pointsMap2.clear()
+        // Load points from the first file
+        for (p in PointList.readFromFile(file1).points)
+            map1.put(p.id, p)
 
-        // Copy entries from temporary maps to internal maps
-        for ((k, v) in tmp1.entries) {
-            pointsMap1.put(k, v)
-        }
-        for ((k, v) in tmp2.entries) {
-            pointsMap2.put(k, v)
-        }
+        // Load points from the second file
+        for (p in PointList.readFromFile(file2).points)
+            map2.put(p.id, p)
     }
 
     /**
-     * Computes the union of the two point maps.
-     * All unique entries from both maps are included.
+     * Returns the union of both point sets (all unique points).
      *
-     * @return A list of unique points contained in either of the maps
+     * @return A PointList containing all unique points
      */
-    fun union2(): List<Point> {
+    fun union2(): PointList {
         val result = HashMapCustom<String, Point>()
 
-        // Add all entries from map1
-        for (entry in pointsMap1) {
-            result.put(entry.key, entry.value)
-        }
+        // Insert all entries from the first map
+        for (entry in map1) result.put(entry.key, entry.value)
 
-        // Add entries from map2 only if not already in the result
-        for (entry in pointsMap2) {
-            if (!result.containsKey(entry.key)) {
-                result.put(entry.key, entry.value)
-            }
-        }
+        // Insert entries from the second map (overwrites duplicates)
+        for (entry in map2) result.put(entry.key, entry.value)
 
-        return toPointList(result)
+        return PointList(result.values()) // Convert map values to a PointList
     }
 
     /**
-     * Computes the intersection of the two point maps.
-     * Only points with keys present in both maps are included.
+     * Returns the intersection of the two point sets
+     * (only points that exist in both maps by ID).
      *
-     * @return A list of points common to both maps
+     * @return A PointList of common points
      */
-    fun intersection2(): List<Point> {
-        val result = HashMapCustom<String, Point>()
-
-        // Add entries that exist in both maps
-        for (entry in pointsMap1) {
-            if (pointsMap2.containsKey(entry.key)) {
-                result.put(entry.key, entry.value)
-            }
-        }
-
-        return toPointList(result)
-    }
-
-    /**
-     * Computes the difference between the two point maps.
-     * Only points from map1 whose keys are not in map2 are included.
-     *
-     * @return A list of points present in map1 but not in map2
-     */
-    fun difference2(): List<Point> {
-        val result = HashMapCustom<String, Point>()
-
-        // Add entries from map1 that do not exist in map2
-        for (entry in pointsMap1) {
-            if (!pointsMap2.containsKey(entry.key)) {
-                result.put(entry.key, entry.value)
-            }
-        }
-
-        return toPointList(result)
-    }
-
-    /**
-     * Converts a custom map of points into a Kotlin list.
-     * This function uses Kotlin collections, but can be replaced with a custom list if needed.
-     *
-     * @param map The custom map containing points
-     * @return A list of point values from the map
-     */
-    private fun toPointList(map: HashMapCustom<String, Point>): List<Point> {
-        // Convert the custom map into a standard list of points
+    fun intersection2(): PointList {
         val result = mutableListOf<Point>()
-        for (entry in map) {
-            result.add(entry.value)
+
+        // Check each key from map1 and add only if present in map2
+        for (entry in map1) {
+            if (map2.containsKey(entry.key)) {
+                result.add(entry.value)
+            }
         }
-        return result
+
+        return PointList(result)
+    }
+
+    /**
+     * Returns the difference between the first and second point sets
+     * (points in map1 that are not in map2).
+     *
+     * @return A PointList of unique points from the first map
+     */
+    fun difference2(): PointList {
+        val result = mutableListOf<Point>()
+
+        // Add points from map1 only if the key is not found in map2
+        for (entry in map1) {
+            if (!map2.containsKey(entry.key)) {
+                result.add(entry.value)
+            }
+        }
+
+        return PointList(result)
     }
 }
