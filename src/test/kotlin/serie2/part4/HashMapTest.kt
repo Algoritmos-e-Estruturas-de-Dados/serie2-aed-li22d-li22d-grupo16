@@ -84,14 +84,14 @@ class HashMapTest {
     @Test
     fun testExpand() {
         val initCap = 5
-        val map = HashMapCustom<Int, String>(initCap, 1.0F)
+        val map = HashMapCustom<Int, String>(initCap, 0.25F)
         for (i in 1..initCap * 5 + 1) {
             val cap = map.capacity
             assertNull(map.put(i, i.toString()))
             assertEquals(i.toString(), map[i])
             if (cap + 1 == map.size) {
                 assertEquals(cap * 2, map.capacity)
-                // println("Size ${map.size}: $cap - Capacity doubled to ${map.capacity}")
+                println("Size ${map.size}: $cap - Capacity doubled to ${map.capacity}")
             }
         }
     }

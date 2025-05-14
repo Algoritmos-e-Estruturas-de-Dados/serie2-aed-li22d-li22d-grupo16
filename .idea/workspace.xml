@@ -6,12 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="2800ca2c-b36c-4a1d-ae43-50a2b65b5e7b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/serie2/part4/HashMapCustom.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/serie2/part4/HashMapCustom.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/FileUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/FileUtils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/Implementation1.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/Implementation1.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/Implementation2.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/Implementation2.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/Point.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/Point.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/serie2/part4/HashMapTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/serie2/part4/HashMapTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/serie2/problema/FileReaderTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/serie2/problema/FileReaderTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/serie2/problema/Imp1Test.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/serie2/problema/Imp1Test.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/serie2/problema/Imp2Test.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/serie2/problema/Imp2Test.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,6 +91,8 @@
     &quot;Gradle.FileReaderTest.testReadPoints (1).executor&quot;: &quot;Run&quot;,
     &quot;Gradle.FileReaderTest.testReadPoints.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.HashMapTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HashMapTest.testExpand.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.HashMapTest.testIterator.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Implementation1Test.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Implementation2Test (1).executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Implementation2Test.executor&quot;: &quot;Run&quot;,
@@ -141,7 +141,7 @@
       <recent name="C:\Isel\2Semestre\AED\serie2-aed-li22d-li22d-grupo16\src\main" />
     </key>
   </component>
-  <component name="RunManager" selected="Kotlin.MainKt">
+  <component name="RunManager" selected="Gradle.HashMapTest.testExpand">
     <configuration name="HashMapTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -156,6 +156,54 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;serie2.part4.HashMapTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="HashMapTest.testExpand" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;serie2.part4.HashMapTest.testExpand&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="HashMapTest.testIterator" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;serie2.part4.HashMapTest.testIterator&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -190,35 +238,6 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="serie2-aed-li22d-li22d-grupo16 [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="ListUtilsKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="serie2.part3.ListUtilsKt" />
-      <module name="Serie2SV2425.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="serie2.problema.MainKt" />
       <module name="Serie2SV2425.main" />
@@ -234,19 +253,19 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Gradle.HashMapTest.testExpand" />
+      <item itemvalue="Gradle.HashMapTest.testIterator" />
       <item itemvalue="Gradle.HashMapTest" />
       <item itemvalue="Gradle.MinimumTest.testHeapSize1" />
-      <item itemvalue="Gradle.serie2-aed-li22d-li22d-grupo16 [build]" />
-      <item itemvalue="Kotlin.ListUtilsKt" />
       <item itemvalue="Kotlin.MainKt" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.HashMapTest.testExpand" />
+        <item itemvalue="Gradle.HashMapTest" />
+        <item itemvalue="Gradle.HashMapTest.testIterator" />
         <item itemvalue="Kotlin.MainKt" />
         <item itemvalue="Gradle.MinimumTest.testHeapSize1" />
-        <item itemvalue="Kotlin.ListUtilsKt" />
-        <item itemvalue="Gradle.HashMapTest" />
-        <item itemvalue="Gradle.serie2-aed-li22d-li22d-grupo16 [build]" />
       </list>
     </recent_temporary>
   </component>

@@ -1,12 +1,12 @@
-import serie2.problema.FileUtils
-import serie2.problema.Point
+package serie2.problema
+
 import kotlin.test.*
 
 class FileReaderTest {
 
     @Test
     fun testReadPoints() {
-        val pointMap = FileUtils.readPoints("src/main/resources/data/Test1.co")
+        val pointMap = PointList.readFromFile("Test1.co")
 
         val expectedPoints = setOf(
             Point("1", 1, 2),
@@ -14,6 +14,6 @@ class FileReaderTest {
             Point("3", 4, 5)
         )
 
-        assertEquals(expectedPoints, pointMap.values.toSet())
+        assertEquals(expectedPoints, pointMap.points.toSet())
     }
 }
