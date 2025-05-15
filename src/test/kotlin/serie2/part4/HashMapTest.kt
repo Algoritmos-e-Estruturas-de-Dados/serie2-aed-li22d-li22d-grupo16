@@ -84,7 +84,7 @@ class HashMapTest {
     @Test
     fun testExpand() {
         val initCap = 5
-        val map = HashMapCustom<Int, String>(initCap, 0.25F)
+        val map = HashMapCustom<Int, String>(initCap, 0.75F)
         for (i in 1..initCap * 5 + 1) {
             val cap = map.capacity
             assertNull(map.put(i, i.toString()))

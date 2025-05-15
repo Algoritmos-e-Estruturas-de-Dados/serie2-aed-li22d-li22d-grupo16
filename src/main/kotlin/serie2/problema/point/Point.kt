@@ -1,4 +1,4 @@
-package serie2.problema
+package serie2.problema.point
 
 /**
  * Represents a 2D point in the plane with an identifier and coordinates.

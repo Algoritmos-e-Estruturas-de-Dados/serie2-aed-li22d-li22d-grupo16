@@ -1,5 +1,9 @@
 package serie2.problema
 
+import serie2.problema.point.PointList
+import serie2.problema.point.PointUtils
+import serie2.problema.point.PointUtils2
+
 /**
  * Main entry point for the ProcessPointsCollections application.
  *
@@ -63,29 +67,34 @@ fun main() {
                 }
                 val outputFile = tokens[1]
 
-                val result = when (implementationToUse) {
-                    1 -> impl1.run {
-                        when (tokens[0]) {
-                            "union" -> union1()
-                            "intersection" -> intersection1()
-                            "difference" -> difference1()
-                            else -> PointList()
+                when (implementationToUse) {
+                    1 -> {
+                        val value = impl1.run {
+                            when (tokens[0]) {
+                                "union" -> union1()
+                                "intersection" -> intersection1()
+                                "difference" -> difference1()
+                                else -> PointUtils()
+                            }
                         }
+                        value.writePointsToFile(outputFile)
                     }
 
-                    2 -> impl2.run {
-                        when (tokens[0]) {
-                            "union" -> union2()
-                            "intersection" -> intersection2()
-                            "difference" -> difference2()
-                            else -> PointList()
+                    2 -> {
+                        val value = impl2.run {
+                            when (tokens[0]) {
+                                "union" -> union2()
+                                "intersection" -> intersection2()
+                                "difference" -> difference2()
+                                else -> PointList(0)
+                            }
                         }
+                        PointUtils2.writePointsToFile(outputFile, value)
                     }
 
-                    else -> PointList()
+                    else -> PointUtils2.writePointsToFile(outputFile, PointList(0))
                 }
 
-                result.writeToFile(outputFile)
                 println("Result written to $outputFile")
             }
 

@@ -1,5 +1,6 @@
 package serie2.problema
 
+import serie2.problema.point.Point
 import kotlin.test.*
 
 class Implementation2Test {
@@ -20,7 +21,7 @@ class Implementation2Test {
             Point("5", 7, 8)
         )
 
-        val unionResult = impl.union2().points.toSet()
+        val unionResult = impl.union2().toSet()
         assertEquals(expectedUnion, unionResult)
     }
 
@@ -36,7 +37,7 @@ class Implementation2Test {
             Point("2", 2, 3)
         )
 
-        val intersectionResult = impl.intersection2().points.toSet()
+        val intersectionResult = impl.intersection2().toSet()
         assertEquals(expectedIntersection, intersectionResult)
     }
 
@@ -53,7 +54,7 @@ class Implementation2Test {
             Point("3", 4, 5)
         )
 
-        val differenceResult = impl.difference2().points.toSet()
+        val differenceResult = impl.difference2().toSet()
         assertEquals(expectedDifference, differenceResult)
     }
 }

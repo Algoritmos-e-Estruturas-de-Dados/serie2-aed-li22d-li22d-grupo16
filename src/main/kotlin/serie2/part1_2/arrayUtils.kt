@@ -17,7 +17,7 @@ fun minimum(maxHeap: Array<Int>, heapSize: Int): Int {
     var min = maxHeap[heapSize / 2]
 
     // Iterate through all the remaining leaves (from heapSize/2 + 1 to heapSize - 1)
-    for (i in (heapSize / 2 + 1) until heapSize) {
+    for (i in (heapSize / 2 + 1) until heapSize-1) {
         // Update the minimum if a smaller leaf is found
         if (maxHeap[i] < min) {
             min = maxHeap[i]

@@ -1,4 +1,4 @@
-package serie2.part1_2
+package serie2.problema.point
 
 /**
  * A fixed-size FIFO (First-In, First-Out) list for storing integers with O(1) operations.
@@ -8,12 +8,11 @@ package serie2.part1_2
  *
  * @property capacity The maximum number of elements the list can store.
  */
-class IntArrayList(private val capacity: Int) : Iterable<Int> {
-    private val array = IntArray(capacity)      // Stores the integer elements
-    private var start = 0                       // Index of the first (oldest) element
-    private var end = 0                         // Index of the next insertion position
-    private var elements = 0                    // Current number of elements in the list
-    private var offset = 0                      // Logical value to add to each element (for addToAll)
+class PointList(private val capacity: Int) : Iterable<Point> {
+    private val array = arrayOfNulls<Point>(capacity) // Stores the integer elements
+    private var first = 0                   // Index of the first (oldest) element
+    private var last = 0                    // Index of the last element
+    private var count = 0                   // The amount of elements in the list
 
     /**
      * Appends an integer to the end of the list.
@@ -23,13 +22,15 @@ class IntArrayList(private val capacity: Int) : Iterable<Int> {
      * @param x The integer to append.
      * @return True if the value was added, false if the list is full.
      */
-    fun append(x: Int): Boolean {
-        if (elements == capacity) return false
-        array[end] = x - offset // Store value adjusted for current offset
-        end = (end + 1) % capacity     // Move end index circularly
-        elements++
+    fun append(x: Point): Boolean {
+        if (count == capacity) return false
+
+        array[last] = x
+        last = (last + 1) % capacity
+        count++
         return true
     }
+
 
     /**
      * Retrieves the nth element of the list (0-based index).
@@ -39,21 +40,10 @@ class IntArrayList(private val capacity: Int) : Iterable<Int> {
      * @param n The index of the element to retrieve.
      * @return The integer at position n, or null if the index is invalid.
      */
-    fun get(n: Int): Int? {
-        if (n < 0 || n >= elements) return null
-        val index = (start + n) % capacity
-        return array[index] + offset
-    }
-
-    /**
-     * Adds a value to all elements in the list.
-     *
-     * This is done logically by updating the offset.
-     *
-     * @param x The value to add.
-     */
-    fun addToAll(x: Int) {
-        offset += x
+    fun get(n: Int): Point? {
+        if (n < 0 || n > capacity) return null
+        val index = (first + n) % capacity
+        return array[index]
     }
 
     /**
@@ -62,9 +52,9 @@ class IntArrayList(private val capacity: Int) : Iterable<Int> {
      * @return True if an element was removed, false if the list is empty.
      */
     fun remove(): Boolean {
-        if (elements == 0) return false
-        start = (start + 1) % capacity // Move start index circularly
-        elements--
+        if (count == 0) return false
+        first = (first + 1) % capacity // Move start index circularly
+        count--
         return true
     }
 
@@ -80,16 +70,18 @@ class IntArrayList(private val capacity: Int) : Iterable<Int> {
      *
      * @return An iterator over the list elements in logical order.
      */
-    override fun iterator(): Iterator<Int> {
-        return object : Iterator<Int> {
+    override fun iterator(): Iterator<Point> {
+        return object : Iterator<Point> {
             private var index = 0
-            override fun hasNext(): Boolean = index < elements
-            override fun next(): Int {
+            override fun hasNext(): Boolean = index < count
+
+            override fun next(): Point {
                 if (!hasNext()) throw NoSuchElementException()
-                val value = array[(start + index) % capacity] + offset
+                val value = array[(first + index) % capacity]
                 index++
-                return value
+                return value!!
             }
+
         }
     }
 }

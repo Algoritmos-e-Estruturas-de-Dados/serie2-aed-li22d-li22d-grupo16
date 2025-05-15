@@ -1,5 +1,8 @@
 package serie2.problema
 
+import serie2.problema.point.Point
+import serie2.problema.point.PointUtils
+
 /**
  * Implementation1 performs set operations on 2D points using Kotlin
  * standard library collections such as HashMap and Set.
@@ -13,8 +16,8 @@ package serie2.problema
  * The identity of a point is determined by its `id`.
  */
 class Implementation1 {
-    private var points1 = PointList() // Stores points from the first input file
-    private var points2 = PointList() // Stores points from the second input file
+    private var points1 = PointUtils() // Stores points from the first input file
+    private var points2 = PointUtils() // Stores points from the second input file
 
     /**
      * Loads two point sets from the specified input files.
@@ -23,8 +26,8 @@ class Implementation1 {
      * @param file2 Path to the second .co file
      */
     fun loadDocuments1(file1: String, file2: String) {
-        points1 = PointList.readFromFile(file1)
-        points2 = PointList.readFromFile(file2)
+        points1 = PointUtils.readPointsFromFile(file1)
+        points2 = PointUtils.readPointsFromFile(file2)
     }
 
     /**
@@ -33,7 +36,7 @@ class Implementation1 {
      *
      * @return A PointList containing all unique points from both sets
      */
-    fun union1(): PointList {
+    fun union1(): PointUtils {
         // Combine both point sets into a HashMap to eliminate duplicates by ID
         val map = HashMap<String, Point>()
 
@@ -44,7 +47,7 @@ class Implementation1 {
         for (p in points2.points) map[p.id] = p
 
         // Return the values (unique points) as a new PointList
-        return PointList(map.values.toList())
+        return PointUtils(map.values.toList())
     }
 
     /**
@@ -53,14 +56,14 @@ class Implementation1 {
      *
      * @return A PointList of common points
      */
-    fun intersection1(): PointList {
+    fun intersection1(): PointUtils {
         // Build a set of IDs from the second point set
         val set2 = points2.points.map { it.id }.toSet()
 
         // Filter points from the first set that are also in set2
         val result = points1.points.filter { it.id in set2 }
 
-        return PointList(result)
+        return PointUtils(result)
     }
 
     /**
@@ -69,13 +72,13 @@ class Implementation1 {
      *
      * @return A PointList containing points only in the first set
      */
-    fun difference1(): PointList {
+    fun difference1(): PointUtils {
         // Build a set of IDs from the second point set
         val set2 = points2.points.map { it.id }.toSet()
 
         // Filter points from the first set whose ID is not in set2
         val result = points1.points.filter { it.id !in set2 }
 
-        return PointList(result)
+        return PointUtils(result)
     }
 }

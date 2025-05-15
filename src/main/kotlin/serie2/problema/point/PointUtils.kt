@@ -1,4 +1,4 @@
-package serie2.problema
+package serie2.problema.point
 
 import java.io.File
 
@@ -10,9 +10,10 @@ import java.io.File
  *   `v <id> <x> <y>`
  * - Lines starting with 'c' or 'p' are ignored (comments or metadata).
  */
-class PointList(val points: List<Point> = listOf()) {
+class PointUtils(val points: List<Point> = listOf()) {
 
     companion object {
+
         /**
          * Reads a .co file and extracts valid points.
          * Ignores lines that don't start with 'v' or are malformed.
@@ -20,7 +21,7 @@ class PointList(val points: List<Point> = listOf()) {
          * @param filename The name of the input file (from the data folder)
          * @return A PointList containing parsed points
          */
-        fun readFromFile(filename: String): PointList {
+        fun readPointsFromFile(filename: String): PointUtils {
             val path = "src/main/resources/data/$filename"
             val lines = File(path).readLines()
 
@@ -36,7 +37,7 @@ class PointList(val points: List<Point> = listOf()) {
                 } else null
             }
 
-            return PointList(points)
+            return PointUtils(points)
         }
     }
 
@@ -46,7 +47,7 @@ class PointList(val points: List<Point> = listOf()) {
      *
      * @param filename The name of the output file (written to outputs folder)
      */
-    fun writeToFile(filename: String) {
+    fun writePointsToFile(filename: String) {
         val outputPath = "src/main/resources/outputs/$filename"
 
         File(outputPath).printWriter().use { out ->

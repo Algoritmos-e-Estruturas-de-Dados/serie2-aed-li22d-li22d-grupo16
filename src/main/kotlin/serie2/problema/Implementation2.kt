@@ -1,6 +1,9 @@
 package serie2.problema
 
 import serie2.part4.HashMapCustom
+import serie2.problema.point.Point
+import serie2.problema.point.PointList
+import serie2.problema.point.PointUtils2
 
 /**
  * Implementation2 performs operations on sets of 2D points using
@@ -30,11 +33,11 @@ class Implementation2 {
         map2 = HashMapCustom()
 
         // Load points from the first file
-        for (p in PointList.readFromFile(file1).points)
+        for (p in PointUtils2.readPointsFromFile(file1))
             map1.put(p.id, p)
 
         // Load points from the second file
-        for (p in PointList.readFromFile(file2).points)
+        for (p in PointUtils2.readPointsFromFile(file2))
             map2.put(p.id, p)
     }
 
@@ -44,15 +47,18 @@ class Implementation2 {
      * @return A PointList containing all unique points
      */
     fun union2(): PointList {
-        val result = HashMapCustom<String, Point>()
+        val pointMap = HashMapCustom<String, Point>()
 
         // Insert all entries from the first map
-        for (entry in map1) result.put(entry.key, entry.value)
+        for (entry in map1) pointMap.put(entry.key, entry.value)
 
         // Insert entries from the second map (overwrites duplicates)
-        for (entry in map2) result.put(entry.key, entry.value)
+        for (entry in map2) pointMap.put(entry.key, entry.value)
 
-        return PointList(result.values()) // Convert map values to a PointList
+        val result = PointList(pointMap.size)
+        for (entry in pointMap) result.append(entry.value)
+
+        return result // Convert map values to a PointList
     }
 
     /**
@@ -62,16 +68,16 @@ class Implementation2 {
      * @return A PointList of common points
      */
     fun intersection2(): PointList {
-        val result = mutableListOf<Point>()
+        val result = PointList(map1.size)
 
         // Check each key from map1 and add only if present in map2
         for (entry in map1) {
             if (map2.containsKey(entry.key)) {
-                result.add(entry.value)
+                result.append(entry.value)
             }
         }
 
-        return PointList(result)
+        return result
     }
 
     /**
@@ -81,15 +87,15 @@ class Implementation2 {
      * @return A PointList of unique points from the first map
      */
     fun difference2(): PointList {
-        val result = mutableListOf<Point>()
+        val result = PointList(map1.size)
 
         // Add points from map1 only if the key is not found in map2
         for (entry in map1) {
             if (!map2.containsKey(entry.key)) {
-                result.add(entry.value)
+                result.append(entry.value)
             }
         }
 
-        return PointList(result)
+        return result
     }
 }

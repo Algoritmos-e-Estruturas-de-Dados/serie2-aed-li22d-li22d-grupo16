@@ -1,5 +1,6 @@
 package serie2.problema
 
+import serie2.problema.point.Point
 import kotlin.test.*
 
 class Implementation1Test {
