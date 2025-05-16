@@ -10,7 +10,7 @@ import java.io.File
  *   `v <id> <x> <y>`
  * - Lines starting with 'c' or 'p' are ignored (comments or metadata).
  */
-class PointUtils2() {
+class PointUtils2 {
 
     companion object {
 
@@ -29,7 +29,6 @@ class PointUtils2() {
             val points = lines.mapNotNull {
                 val parts = it.trim().split(" ")
                 if (parts.size == 4 && parts[0] == "v") {
-                    val id = parts[1]
                     val x = parts[2].toIntOrNull()
                     val y = parts[3].toIntOrNull()
 
