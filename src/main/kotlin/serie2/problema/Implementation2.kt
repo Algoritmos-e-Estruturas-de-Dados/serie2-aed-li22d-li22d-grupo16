@@ -6,96 +6,80 @@ import serie2.problema.point.PointList
 import serie2.problema.point.PointUtils2
 
 /**
- * Implementation2 performs operations on sets of 2D points using
- * a custom hash map implementation ("HashMapCustom").
+ * Implementation2 performs set operations on 2D points using a custom HashMap implementation.
+ * It combines points from both input files into a single map to efficiently determine
+ * union, intersection, and difference results.
  *
- * This class mimics the standard map-based behavior from Implementation1,
- * but relies entirely on custom internal data structures.
- *
- * Provides:
- * - `loadDocuments2`: Loads two sets of points into custom maps.
- * - `union2`: All unique points from both sets.
- * - `intersection2`: Points common to both sets.
- * - `difference2`: Points in the first set not in the second.
+ * - Uses HashMapCustom<Point, Int> where the key is the point and value is the file origin:
+ *   - 1 = file1 only
+ *   - 2 = file2 only
+ *   - 3 = present in both files
  */
 class Implementation2 {
-    private var map1 = HashMapCustom<String, Point>() // First point set (ID → Point)
-    private var map2 = HashMapCustom<String, Point>() // Second point set (ID → Point)
+    private var pointMap = HashMapCustom<Point, Int>()
 
     /**
-     * Loads two point sets from .co files into custom hash maps.
+     * Loads points from two .co files and marks their origin using bits.
+     * - If a point appears in both files, its value will be 3 (1 | 2).
      *
-     * @param file1 Name of the first .co file
-     * @param file2 Name of the second .co file
+     * @param file1 Path to the first .co file
+     * @param file2 Path to the second .co file
      */
     fun loadDocuments2(file1: String, file2: String) {
-        map1 = HashMapCustom()
-        map2 = HashMapCustom()
+        pointMap = HashMapCustom()
 
-        // Load points from the first file
-        for (p in PointUtils2.readPointsFromFile(file1))
-            map1.put(p.id, p)
+        val points1 = PointUtils2.readPointsFromFile(file1)
+        val points2 = PointUtils2.readPointsFromFile(file2)
 
-        // Load points from the second file
-        for (p in PointUtils2.readPointsFromFile(file2))
-            map2.put(p.id, p)
+        // Mark points from file 1
+        for (p in points1) {
+            val previous = pointMap[p]
+            pointMap.put(p, if (previous == null) 1 else previous or 1)
+        }
+
+        // Mark points from file 2
+        for (p in points2) {
+            val previous = pointMap[p]
+            pointMap.put(p, if (previous == null) 2 else previous or 2)
+        }
     }
 
     /**
      * Returns the union of both point sets (all unique points).
      *
-     * @return A PointList containing all unique points
+     * @return A PointList containing all unique points from both files
      */
     fun union2(): PointList {
-        val pointMap = HashMapCustom<String, Point>()
-
-        // Insert all entries from the first map
-        for (entry in map1) pointMap.put(entry.key, entry.value)
-
-        // Insert entries from the second map (overwrites duplicates)
-        for (entry in map2) pointMap.put(entry.key, entry.value)
-
         val result = PointList(pointMap.size)
-        for (entry in pointMap) result.append(entry.value)
-
-        return result // Convert map values to a PointList
-    }
-
-    /**
-     * Returns the intersection of the two point sets
-     * (only points that exist in both maps by ID).
-     *
-     * @return A PointList of common points
-     */
-    fun intersection2(): PointList {
-        val result = PointList(map1.size)
-
-        // Check each key from map1 and add only if present in map2
-        for (entry in map1) {
-            if (map2.containsKey(entry.key)) {
-                result.append(entry.value)
-            }
+        for (entry in pointMap) {
+            result.append(entry.key)
         }
-
         return result
     }
 
     /**
-     * Returns the difference between the first and second point sets
-     * (points in map1 that are not in map2).
+     * Returns the intersection (points present in both files).
      *
-     * @return A PointList of unique points from the first map
+     * @return A PointList containing points common to both files
+     */
+    fun intersection2(): PointList {
+        val result = PointList(pointMap.size)
+        for (entry in pointMap) {
+            if (entry.value == 3) result.append(entry.key)
+        }
+        return result
+    }
+
+    /**
+     * Returns the difference (points in file 1 not in file 2).
+     *
+     * @return A PointList containing points only from file1
      */
     fun difference2(): PointList {
-        val result = PointList(map1.size)
-
-        // Add points from map1 only if the key is not found in map2
-        for (entry in map1) {
-            if (!map2.containsKey(entry.key)) {
-                result.append(entry.value)
-            }
+        val result = PointList(pointMap.size)
+        for (entry in pointMap) {
+            if (entry.value == 1) result.append(entry.key)
         }
-
         return result
     }
 }

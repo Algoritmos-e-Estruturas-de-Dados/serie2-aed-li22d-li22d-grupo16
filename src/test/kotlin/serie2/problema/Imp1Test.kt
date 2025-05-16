@@ -14,15 +14,15 @@ class Implementation1Test {
         impl.loadDocuments1(file1, file2)
 
         val expectedUnion = setOf(
-            Point("1", 1, 2),
-            Point("2", 2, 3),
-            Point("3", 4, 5),
-            Point("4", 5, 6),
-            Point("5", 7, 8)
+            Point(1, 2),
+            Point(2, 3),
+            Point(4, 5),
+            Point(5, 6),
+            Point(7, 8)
         )
 
-        val unionResult = impl.union1()
-        assertEquals(expectedUnion, unionResult.points.toSet())
+        val unionResult = impl.union1().points.toSet()
+        assertEquals(expectedUnion, unionResult)
     }
 
     @Test
@@ -34,11 +34,11 @@ class Implementation1Test {
         impl.loadDocuments1(file1, file2)
 
         val expectedIntersection = setOf(
-            Point("2", 2, 3)
+            Point(2, 3)
         )
 
-        val intersectionResult = impl.intersection1()
-        assertEquals(expectedIntersection, intersectionResult.points.toSet())
+        val intersectionResult = impl.intersection1().points.toSet()
+        assertEquals(expectedIntersection, intersectionResult)
     }
 
     @Test
@@ -50,11 +50,11 @@ class Implementation1Test {
         impl.loadDocuments1(file1, file2)
 
         val expectedDifference = setOf(
-            Point("1", 1, 2),
-            Point("3", 4, 5)
+            Point(1, 2),
+            Point(4, 5)
         )
 
-        val differenceResult = impl.difference1()
-        assertEquals(expectedDifference, differenceResult.points.toSet())
+        val differenceResult = impl.difference1().points.toSet()
+        assertEquals(expectedDifference, differenceResult)
     }
 }

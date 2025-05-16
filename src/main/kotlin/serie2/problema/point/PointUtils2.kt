@@ -33,7 +33,7 @@ class PointUtils2() {
                     val x = parts[2].toIntOrNull()
                     val y = parts[3].toIntOrNull()
 
-                    if (x != null && y != null) Point(id, x, y) else null
+                    if (x != null && y != null) Point(x, y) else null
                 } else null
             }
 
@@ -57,7 +57,7 @@ class PointUtils2() {
             File(outputPath).printWriter().use { out ->
                 for (point in points) {
                     // Write each point in the expected format
-                    out.println("${point.id} ${point.x} ${point.y}")
+                    out.println("${point.x} ${point.y}")
                 }
             }
         }

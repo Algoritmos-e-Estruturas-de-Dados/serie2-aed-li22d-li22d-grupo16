@@ -29,11 +29,10 @@ class PointUtils(val points: List<Point> = listOf()) {
             val points = lines.mapNotNull {
                 val parts = it.trim().split(" ")
                 if (parts.size == 4 && parts[0] == "v") {
-                    val id = parts[1]
                     val x = parts[2].toIntOrNull()
                     val y = parts[3].toIntOrNull()
 
-                    if (x != null && y != null) Point(id, x, y) else null
+                    if (x != null && y != null) Point(x, y) else null
                 } else null
             }
 
@@ -43,7 +42,7 @@ class PointUtils(val points: List<Point> = listOf()) {
 
     /**
      * Writes the list of points to a .co output file in the format:
-     * `<id> <x> <y>` (one per line).
+     * `<x> <y>` (one per line).
      *
      * @param filename The name of the output file (written to outputs folder)
      */
@@ -53,7 +52,7 @@ class PointUtils(val points: List<Point> = listOf()) {
         File(outputPath).printWriter().use { out ->
             for (point in points) {
                 // Write each point in the expected format
-                out.println("${point.id} ${point.x} ${point.y}")
+                out.println("${point.x} ${point.y}")
             }
         }
     }

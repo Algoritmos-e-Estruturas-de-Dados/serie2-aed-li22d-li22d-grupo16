@@ -4,81 +4,76 @@ import serie2.problema.point.Point
 import serie2.problema.point.PointUtils
 
 /**
- * Implementation1 performs set operations on 2D points using Kotlin
- * standard library collections such as HashMap and Set.
+ * Implementation1 performs set operations (union, intersection, difference)
+ * on 2D points using a single HashMap<Point, Int> to track their origin.
  *
- * This class provides:
- * - `loadDocuments1`: Loads two point sets from files.
- * - `union1`: Returns all unique points from both sets.
- * - `intersection1`: Returns points common to both sets.
- * - `difference1`: Returns points in the first set not in the second.
+ * Each Point is stored as a key, and the value (Int) represents its presence:
+ * - 1: Point exists only in file1
+ * - 2: Point exists only in file2
+ * - 3: Point exists in both files (1 | 2)
  *
- * The identity of a point is determined by its `id`.
+ * This strategy ensures efficient detection of duplicates and supports
+ * all three set operations based on bitwise flags.
  */
 class Implementation1 {
-    private var points1 = PointUtils() // Stores points from the first input file
-    private var points2 = PointUtils() // Stores points from the second input file
+
+    // Stores all unique points across both files, tracking their origin using flags (1, 2, or 3)
+    private val allPoints = HashMap<Point, Int>()
 
     /**
-     * Loads two point sets from the specified input files.
+     * Loads two point sets from the specified input files and fills the HashMap.
+     * Each point is associated with a value that represents the file(s) it came from.
      *
      * @param file1 Path to the first .co file
      * @param file2 Path to the second .co file
      */
     fun loadDocuments1(file1: String, file2: String) {
-        points1 = PointUtils.readPointsFromFile(file1)
-        points2 = PointUtils.readPointsFromFile(file2)
+        val pointsFromFile1 = PointUtils.readPointsFromFile(file1).points
+        val pointsFromFile2 = PointUtils.readPointsFromFile(file2).points
+
+        // Mark all points from file1 with flag 1
+        for (p in pointsFromFile1) {
+            allPoints[p] = allPoints.getOrDefault(p, 0) or 1
+        }
+
+        // Mark all points from file2 with flag 2 (or combine with existing if also in file1)
+        for (p in pointsFromFile2) {
+            allPoints[p] = allPoints.getOrDefault(p, 0) or 2
+        }
     }
 
     /**
      * Returns the union of both point sets.
-     * Only unique points are included (based on ID).
+     * All unique points are included, regardless of source.
      *
-     * @return A PointList containing all unique points from both sets
+     * @return A PointUtils containing all distinct points from both files
      */
     fun union1(): PointUtils {
-        // Combine both point sets into a HashMap to eliminate duplicates by ID
-        val map = HashMap<String, Point>()
-
-        // Add points from the first set
-        for (p in points1.points) map[p.id] = p
-
-        // Add/overwrite points from the second set
-        for (p in points2.points) map[p.id] = p
-
-        // Return the values (unique points) as a new PointList
-        return PointUtils(map.values.toList())
+        // All keys represent unique points from either file
+        return PointUtils(allPoints.keys.toList())
     }
 
     /**
      * Returns the intersection of both point sets.
-     * Only points that exist in both sets (by ID) are included.
+     * Only points that appear in both files are included.
      *
-     * @return A PointList of common points
+     * @return A PointUtils containing points found in both files
      */
     fun intersection1(): PointUtils {
-        // Build a set of IDs from the second point set
-        val set2 = points2.points.map { it.id }.toSet()
-
-        // Filter points from the first set that are also in set2
-        val result = points1.points.filter { it.id in set2 }
-
-        return PointUtils(result)
+        // Filter map to include only entries marked as present in both files (1 | 2 == 3)
+        val common = allPoints.filterValues { it == 3 }.keys.toList()
+        return PointUtils(common)
     }
 
     /**
      * Returns the difference between the first and second point sets.
-     * Only points that exist in the first set and not in the second are included.
+     * Only points exclusive to the first file are included.
      *
-     * @return A PointList containing points only in the first set
+     * @return A PointUtils containing points that exist only in file1
      */
     fun difference1(): PointUtils {
-        // Build a set of IDs from the second point set
-        val set2 = points2.points.map { it.id }.toSet()
-
-        // Filter points from the first set whose ID is not in set2
-        val result = points1.points.filter { it.id !in set2 }
-
-        return PointUtils(result)
+        // Filter map to include only entries with flag 1 (exclusive to file1)
+        val onlyInFile1 = allPoints.filterValues { it == 1 }.keys.toList()
+        return PointUtils(onlyInFile1)
     }
 }

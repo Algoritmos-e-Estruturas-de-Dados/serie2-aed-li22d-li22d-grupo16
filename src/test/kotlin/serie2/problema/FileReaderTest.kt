@@ -8,14 +8,14 @@ class FileReaderTest {
 
     @Test
     fun testReadPoints() {
-        val pointMap = PointUtils2.readPointsFromFile("Test1.co")
+        val pointUtils = PointUtils2.readPointsFromFile("Test1.co")
 
         val expectedPoints = setOf(
-            Point("1", 1, 2),
-            Point("2", 2, 3),
-            Point("3", 4, 5)
+            Point(1, 2),
+            Point(2, 3),
+            Point(4, 5)
         )
 
-        assertEquals(expectedPoints, pointMap.toSet())
+        assertEquals(expectedPoints, pointUtils.toSet())
     }
 }

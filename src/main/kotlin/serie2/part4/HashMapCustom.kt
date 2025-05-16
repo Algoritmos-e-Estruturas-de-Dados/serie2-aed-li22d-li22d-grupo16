@@ -39,14 +39,14 @@ class HashMapCustom<K, V>(
 
     // Array of buckets (each bucket is a singly linked list of HashNodes)
     private var table: Array<HashNode<K, V>?> = arrayOfNulls(initialCapacity)
-    private var _size = 0
+    private var elementCounter = 0
 
     /**
      * Gets the number of elements in the map.
      *
      * @return The size of the map.
      */
-    override val size: Int get() = _size
+    override val size: Int get() = elementCounter
 
     /**
      * Gets the current capacity (number of buckets) in the table.
@@ -85,6 +85,7 @@ class HashMapCustom<K, V>(
         return null
     }
 
+
     /**
      * Inserts a new key-value pair into the map, or updates the value if the key already exists.
      *
@@ -94,8 +95,8 @@ class HashMapCustom<K, V>(
      */
     override fun put(key: K, value: V): V? {
         val hc = key.hashCode()                        // Compute hash code
-        val index = indexFor(hc)                       // Get the index for the bucket
-        val existingNode = findNode(index, key, hc)    // Look for an existing node
+        val bucketIndex = indexFor(hc)                       // Get the index for the bucket
+        val existingNode = findNode(bucketIndex, key, hc)    // Look for an existing node
 
         if (existingNode != null) {
             // Key exists: update value and return old value
@@ -103,12 +104,12 @@ class HashMapCustom<K, V>(
         }
 
         // Key not found: insert a new node at the head of the list
-        val newNode = HashNode(key, value, table[index])
-        table[index] = newNode
-        _size++                                        // Increase element count
+        val newNode = HashNode(key, value, table[bucketIndex])
+        table[bucketIndex] = newNode
+        elementCounter++                                        // Increase element count
 
         // Resize the table if the current load exceeds the threshold
-        if (_size > capacity * loadFactor) expand()
+        if (elementCounter >= capacity * loadFactor) expand()
 
         return null
     }
@@ -133,7 +134,7 @@ class HashMapCustom<K, V>(
                 } else {
                     prev.next = node.next
                 }
-                _size--                                // Decrease element count
+                elementCounter--                                // Decrease element count
                 return node.value                      // Return the removed value
             }
             prev = node
@@ -177,7 +178,7 @@ class HashMapCustom<K, V>(
      */
     override fun clear() {
         table = arrayOfNulls(capacity)                 // Reset buckets
-        _size = 0                                      // Reset size
+        elementCounter = 0                                      // Reset size
     }
 
     /**
