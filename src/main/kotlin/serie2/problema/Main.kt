@@ -67,6 +67,8 @@ fun main() {
                 }
                 val outputFile = tokens[1]
 
+                val start = System.nanoTime()
+
                 when (implementationToUse) {
                     1 -> {
                         val value = impl1.run {
@@ -95,7 +97,9 @@ fun main() {
                     else -> PointUtils2.writePointsToFile(outputFile, PointList(0))
                 }
 
-                println("Result written to $outputFile")
+                val end = System.nanoTime()
+                val durationMs = (end - start) / 1_000_000.0
+                println("Result written to $outputFile in %.3f ms".format(durationMs))
             }
 
             else -> {

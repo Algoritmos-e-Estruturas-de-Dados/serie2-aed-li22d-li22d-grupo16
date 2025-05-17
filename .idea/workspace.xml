@@ -6,15 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2800ca2c-b36c-4a1d-ae43-50a2b65b5e7b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/serie2/part4/HashMapCustom.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/serie2/part4/HashMapCustom.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/Implementation1.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/Implementation1.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/Implementation2.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/Implementation2.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/point/Point.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/point/Point.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/point/PointUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/point/PointUtils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/point/PointUtils2.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/point/PointUtils2.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/serie2/problema/FileReaderTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/serie2/problema/FileReaderTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/serie2/problema/Imp1Test.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/serie2/problema/Imp1Test.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/serie2/problema/Imp2Test.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/serie2/problema/Imp2Test.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/serie2/problema/Main.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +141,7 @@
       <recent name="C:\Isel\2Semestre\AED\serie2-aed-li22d-li22d-grupo16\src\main" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Implementation2Test">
+  <component name="RunManager" selected="Kotlin.MainKt">
     <configuration name="HashMapTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -269,9 +261,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Kotlin.MainKt" />
         <item itemvalue="Gradle.Implementation2Test" />
         <item itemvalue="Gradle.HashMapTest.testExpand" />
-        <item itemvalue="Kotlin.MainKt" />
         <item itemvalue="Gradle.TestIntArrayList" />
         <item itemvalue="Gradle.HashMapTest" />
       </list>
